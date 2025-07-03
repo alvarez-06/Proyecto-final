@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head') %>
+    <title>Mis Notificaciones</title>
+</head>
+<body class="bg-light">
+    <%- include('partials/navbar') %>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Mis Notificaciones</h1>
+
+        <% if (mensaje) { %>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <%= mensaje %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
+
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <% if (invitations && invitations.length > 0) { %>
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-primary text-white">
+                            Invitaciones de Proyectos Pendientes
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <% invitations.forEach(inv => { %>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong><%= inv.nombreAdmin %></strong> te ha invitado a unirte al proyecto
+                                        <strong>"<%= inv.nombreProyecto %>"</strong>.
+                                        <br>
+                                        <small class="text-muted">Invitación enviada el: <%= new Date(inv.fechaInvitacion).toLocaleDateString() %></small>
+                                    </div>
+                                    <div>
+                                        <form action="/invitaciones/aceptar/<%= inv.idProyecto %>" method="POST" class="d-inline">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button type="submit" class="btn btn-success btn-sm me-2">Aceptar</button>
+                                        </form>
+                                        <form action="/invitaciones/rechazar/<%= inv.idProyecto %>" method="POST" class="d-inline">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                                        </form>
+                                    </div>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-info" role="alert">
+                        No tienes invitaciones de proyectos pendientes.
+                    </div>
+                <% } %>
+
+                <h2 class="mt-5 mb-3">Otras Notificaciones</h2>
+                <% if (notifications && notifications.length > 0) { %>
+                    <div class="card shadow-sm">
+                        <ul class="list-group list-group-flush">
+                            <% notifications.forEach(notif => { %>
+                                <li class="list-group-item <%= notif.leida ? 'text-muted' : 'font-weight-bold' %>">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><%= notif.tipoNotificacion.replace(/_/g, ' ') %></h5>
+                                        <small><%= new Date(notif.fechaCreacion).toLocaleString() %></small>
+                                    </div>
+                                    <p class="mb-1"><%= notif.mensaje %></p>
+                                    <% if (!notif.leida) { %>
+                                        <% } %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-info" role="alert">
+                        No tienes otras notificaciones.
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

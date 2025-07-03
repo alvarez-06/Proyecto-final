@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('partials/head') %>
+    <title>Invitar Usuario a <%= proyecto.nombreProyecto %></title>
+    <style>
+        .participant-list {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .participant-item {
+            padding: 5px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: .3em .6em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+            color: #fff;
+        }
+        .status-pendiente { background-color: #ffc107; color: #343a40; } /* Amarillo */
+        .status-aceptada { background-color: #28a745; } /* Verde */
+        .status-rechazada { background-color: #dc3545; } /* Rojo */
+    </style>
+</head>
+<body class="bg-light">
+    <%- include('partials/navbar') %>
+
+    <div class="container mt-4">
+        <h1 class="mb-4">Invitar Usuario al Proyecto: <%= proyecto.nombreProyecto %></h1>
+
+        <% if (mensaje) { %>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <%= mensaje %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <% } %>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        Formulario de Invitación
+                    </div>
+                    <div class="card-body">
+                        <form action="/proyectos/<%= proyecto.idProyecto %>/invitar" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                            <div class="mb-3">
+                                <label for="correoInvitado" class="form-label">Correo electrónico del usuario a invitar:</label>
+                                <input type="email" class="form-control" id="correoInvitado" name="correoInvitado"
+                                       placeholder="ejemplo@dominio.com" required
+                                       value="<%= typeof formData !== 'undefined' ? formData.correoInvitado : '' %>">
+                            </div>
+
+                            <button type="submit" class="btn btn-success">Enviar Invitación</button>
+                            <a href="/proyectos/<%= proyecto.idProyecto %>" class="btn btn-secondary">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        Participantes Actuales y Pendientes
+                    </div>
+                    <div class="card-body">
+                        <% if (participantesActuales && participantesActuales.length > 0) { %>
+                            <div class="participant-list">
+                                <ul class="list-unstyled">
+                                    <% participantesActuales.forEach(p => { %>
+                                        <li class="participant-item d-flex justify-content-between align-items-center">
+                                            <span><%= p.correoUsuario %></span>
+                                            <% if (p.estadoInvitacion === 'pendiente') { %>
+                                                <span class="status-badge status-pendiente">Pendiente</span>
+                                            <% } else if (p.estadoInvitacion === 'aceptada') { %>
+                                                <span class="status-badge status-aceptada">Aceptado</span>
+                                            <% } else if (p.estadoInvitacion === 'rechazada') { %>
+                                                <span class="status-badge status-rechazada">Rechazado</span>
+                                            <% } %>
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            </div>
+                        <% } else { %>
+                            <p>Este proyecto aún no tiene participantes (aparte de ti, el administrador).</p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
