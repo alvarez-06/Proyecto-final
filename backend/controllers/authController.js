@@ -114,7 +114,7 @@ exports.postLogin = async (req, res, next) => {
 
         loginLimiter.resetAttempts(correo);
 
-        res.redirect('/index');
+        res.redirect('/proyectos');
     } catch (error) {
         console.error("Error en postLogin:", error); // Mensaje específico de en donde se produce el error
         req.session.mensaje = 'Error interno del servidor. Inténtalo de nuevo.'; // Mensaje genérico para el usuario

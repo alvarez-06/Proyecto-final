@@ -1,42 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <%- include('partials/head') %>
-    <title>Invitar Usuario a <%= proyecto.nombreProyecto %></title>
-    <style>
-        .participant-list {
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #e0e0e0;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        .participant-item {
-            padding: 5px 0;
-            border-bottom: 1px dashed #eee;
-        }
-        .participant-item:last-child {
-            border-bottom: none;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: .3em .6em;
-            font-size: 75%;
-            font-weight: 700;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: .25rem;
-            color: #fff;
-        }
-        .status-pendiente { background-color: #ffc107; color: #343a40; } /* Amarillo */
-        .status-aceptada { background-color: #28a745; } /* Verde */
-        .status-rechazada { background-color: #dc3545; } /* Rojo */
-    </style>
+    <%- include('partials/head', { title: 'Invitar Usuario: ' + proyecto.nombreProyecto }) %>
 </head>
-<body class="bg-light">
+<body>
     <%- include('partials/navbar') %>
 
     <div class="container mt-4">

@@ -1,665 +1,728 @@
-/* Paleta base */
+/* ==============================================
+   ESTILOS GENERALES Y PALETA DE COLORES
+   ============================================== */
 :root {
-  --color-bg: #31231D;
-  --color-panel: #B86B57;
-  --color-accent: #ED7441;
-  --color-dark: #3E2E2E;
-  --color-border: #5A3A2D;
-  --color-light: #E0F4D4;
-  --color-text: #FFFFFF;
+    --color-darkest: #0A0F0D; /* Fondo principal oscuro, texto en elementos oscuros */
+    --color-dark-accent: #2D4F4A; /* Acentos más oscuros, bordes de cards/paneles */
+    --color-main-accent: #8DB1A4; /* Color principal de acento, botones primarios, enlaces */
+    --color-text-light: #E0E0E0; /* Texto claro para fondos oscuros */
+    --color-background-light: #F8F8F8; /* Fondo claro para secciones */
+    --color-white: #FFFFFF; /* Blanco puro para elementos específicos */
+    --color-gray-light: #DDD; /* Gris claro para bordes y separadores */
+    --color-gray-medium: #888; /* Gris medio para texto secundario */
+    --color-gray-dark: #555; /* Gris oscuro para texto de info */
+
+    /* Colores de estado (para mensajes, alertas) */
+    --color-success: #28a745;
+    --color-info: #17a2b8;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+
+    /* Sombras sutiles para un look minimalista */
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.15);
+
+    /* Transiciones suaves */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-normal: 0.3s ease-in-out;
 }
 
+/* ==============================================
+   RESET Y ESTILOS BASE
+   ============================================== */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--color-darkest);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Asegura que el footer se quede abajo */
 }
 
-/* Contenedor central */
+.container {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-background-light);
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+    color: var(--color-darkest); /* Texto oscuro en contenedores claros */
+    flex-grow: 1; /* Permite que el contenido crezca y empuje el footer */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-dark-accent);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+a {
+    color: var(--color-main-accent);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-dark-accent);
+    text-decoration: underline;
+}
+
+/* ==============================================
+   MENSAJES DE ERROR Y ÉXITO
+   ============================================== */
+.error-message, .success-message {
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.error-message {
+    background-color: rgba(var(--color-danger), 0.1);
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}
+
+.success-message {
+    background-color: rgba(var(--color-success), 0.1);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+
+/* ==============================================
+   CARDS (Login, Recuperación, Reset)
+   ============================================== */
 .card {
-  background-color: var(--color-panel);
-  border: 2px solid var(--color-border);
-  border-radius: 12px;
-  padding: 30px 40px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-dark-accent);
+    border-radius: 8px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    margin: 50px auto;
+    box-shadow: var(--shadow-lg);
+    color: var(--color-darkest);
 }
 
 .card h1, .card h2 {
-  color: var(--color-dark);
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--color-dark-accent);
 }
 
-/* Formularios */
+/* ==============================================
+   FORMULARIOS
+   ============================================== */
 form {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 label {
-  margin: 10px 0 5px;
-  font-weight: bold;
-  color: var(--color-dark);
+    margin: 10px 0 5px;
+    font-weight: 600;
+    color: var(--color-darkest);
+    font-size: 0.9em;
 }
 
 input[type="email"],
 input[type="password"],
 input[type="text"],
-input[type="file"] {
-  padding: 10px;
-  border: 2px solid var(--color-border);
-  border-radius: 6px;
-  background-color: var(--color-light);
-  color: var(--color-dark);
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--color-background-light);
+    color: var(--color-darkest);
+    font-size: 1em;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-input[type="radio"] {
-  margin-right: 5px;
-}
-
-button,
-input[type="submit"] {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: var(--color-accent);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover,
-input[type="submit"]:hover {
-  background-color: #d85f2b;
+input:focus, select:focus, textarea:focus {
+    border-color: var(--color-main-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-main-accent), 0.2);
 }
 
 small {
-  font-size: 0.85em;
-  color: var(--color-dark);
-}
-
-.mensaje {
-  background-color: #fff0f0;
-  color: #a00;
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-}
-
-/* Layout imágenes */
-.imagenes-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.imagenes-container label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
-
-.imagenes-container img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border: 2px solid transparent;
-  border-radius: 50%;
-  transition: border 0.2s;
-}
-
-.imagenes-container input[type="radio"]:checked + img {
-  border: 2px solid var(--color-accent);
-}
-
-/* Responsivo */
-@media (max-width: 480px) {
-  .card {
-    padding: 20px;
-  }
-
-  .imagenes-container img {
-    width: 50px;
-    height: 50px;
-  }
-}
-
-/* 
-===============================================
-SISTEMA DE GESTIÓN DE TAREAS - ESTILOS CSS
-===============================================
-Paleta de colores basada en las especificaciones del proyecto:
-- #B67253 (Marrón claro)
-- #8B6857 (Marrón medio) 
-- #E07441 (Naranja)
-- #61534D (Marrón oscuro)
-- #36312E (Negro/Marrón muy oscuro)
-- #332823 (Negro base)
-===============================================
-*/
-
-/* ===== VARIABLES CSS PERSONALIZADAS ===== */
-:root {
-    /* Paleta de colores principal */
-    --color-primary: #E07441;        /* Naranja principal */
-    --color-secondary: #B67253;      /* Marrón claro */
-    --color-accent: #8B6857;         /* Marrón medio */
-    --color-dark: #61534D;           /* Marrón oscuro */
-    --color-darker: #36312E;         /* Negro/Marrón muy oscuro */
-    --color-darkest: #332823;        /* Negro base */
-    
-    /* Colores complementarios */
-    --color-light: #F8F9FA;          /* Blanco suave */
-    --color-white: #FFFFFF;          /* Blanco puro */
-    --color-muted: #6C757D;          /* Gris medio */
-    --color-border: #DEE2E6;         /* Gris claro para bordes */
-    
-    /* Estados */
-    --color-success: #198754;        /* Verde para éxito */
-    --color-warning: #FFC107;        /* Amarillo para advertencias */
-    --color-danger: #DC3545;         /* Rojo para errores */
-    --color-info: #0DCAF0;           /* Azul para información */
-    
-    /* Sombras y efectos */
-    --shadow-sm: 0 0.125rem 0.25rem rgba(54, 40, 35, 0.075);
-    --shadow-md: 0 0.5rem 1rem rgba(54, 40, 35, 0.15);
-    --shadow-lg: 0 1rem 3rem rgba(54, 40, 35, 0.175);
-    
-    /* Transiciones */
-    --transition-fast: 0.15s ease-in-out;
-    --transition-normal: 0.3s ease-in-out;
-    --transition-slow: 0.5s ease-in-out;
-}
-
-/* ===== RESET Y CONFIGURACIÓN BASE ===== */
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, var(--color-light) 0%, #F1F3F4 100%);
-    color: var(--color-darkest);
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-.container-fluid {
-    height: 100vh;
-    padding: 0;
-}
-
-/* ===== HEADER PRINCIPAL ===== */
-.header-section {
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    color: var(--color-white);
-    box-shadow: var(--shadow-md);
-    border-bottom: 3px solid var(--color-accent);
-}
-
-.main-title {
-    font-size: 2rem;
-    font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* ===== BARRA DE BÚSQUEDA ===== */
-.search-container {
-    min-width: 250px;
-}
-
-.search-input {
-    border: 2px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.9);
-    color: var(--color-darkest);
-    font-size: 0.9rem;
-    transition: var(--transition-normal);
-}
-
-.search-input:focus {
-    border-color: var(--color-white);
-    background: var(--color-white);
-    box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.25);
-}
-
-.search-icon {
-    background: rgba(255,255,255,0.9);
-    border: 2px solid rgba(255,255,255,0.3);
-    color: var(--color-accent);
-}
-
-/* ===== BOTÓN CREAR PROYECTO ===== */
-.btn-create-project {
-    background: var(--color-white);
-    color: var(--color-primary);
-    border: 2px solid var(--color-white);
-    font-weight: 600;
-    padding: 0.5rem 1.2rem;
-    border-radius: 8px;
-    transition: var(--transition-normal);
-    box-shadow: var(--shadow-sm);
-}
-
-.btn-create-project:hover {
-    background: var(--color-light);
-    color: var(--color-darker);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-/* ===== CONTENIDO PRINCIPAL ===== */
-.main-content {
-    height: calc(100vh - 80px);
-    margin: 0;
-}
-
-/* ===== SIDEBAR (PROYECTOS TERMINADOS) ===== */
-.sidebar-section {
-    background: var(--color-white);
-    border-right: 3px solid var(--color-border);
-    padding: 1.5rem;
-    overflow-y: auto;
-    box-shadow: inset -5px 0 10px rgba(0,0,0,0.05);
-}
-
-/* ===== SECCIÓN PRINCIPAL (PROYECTOS ACTIVOS) ===== */
-.main-section {
-    background: var(--color-light);
-    padding: 1.5rem;
-    overflow-y: auto;
-}
-
-/* ===== TÍTULOS DE SECCIÓN ===== */
-.section-title {
-    color: var(--color-darker);
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 3px solid var(--color-primary);
-    position: relative;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 50px;
-    height: 3px;
-    background: var(--color-accent);
-}
-
-/* ===== CONTENEDORES DE PROYECTOS ===== */
-.projects-list {
-    max-height: calc(100vh - 160px);
-    overflow-y: auto;
-}
-
-/* ===== TARJETAS DE PROYECTOS TERMINADOS ===== */
-.completed-project-card {
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 0.8rem;
-    transition: var(--transition-normal);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-
-.completed-project-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 4px;
-    height: 100%;
-    background: var(--color-success);
-    transition: var(--transition-fast);
-}
-
-.completed-project-card:hover {
-    transform: translateX(5px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--color-success);
-}
-
-.completed-project-card:hover::before {
-    width: 6px;
-}
-
-.completed-project-name {
-    font-weight: 600;
-    color: var(--color-darker);
-    font-size: 0.95rem;
-    margin-bottom: 0.3rem;
-    text-decoration: none;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: -8px;
+    margin-bottom: 10px;
     display: block;
 }
 
-.completed-project-name:hover {
-    color: var(--color-primary);
-    text-decoration: none;
+.create-proyect{
+    display: flex;
+    align-items: center;
 }
 
-.completed-project-id {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    font-family: 'Courier New', monospace;
+#nombreProyecto, #descripcionProyecto, #fechaEntrega{
+    width: 60%;
 }
 
-/* ===== TARJETAS DE PROYECTOS ACTIVOS ===== */
-.active-project-card {
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.2rem;
-    transition: var(--transition-normal);
+.label-create{
+    margin: 10px 0 5px;
+    font-weight: 600;
+    color: var(--color-text-light);
+    font-size: 0.9em;
+}
+
+.button-crearProyecto{
+    width: 60%;
+    margin-top: 10px;
+}
+
+/* ==============================================
+   BOTONES
+   ============================================== */
+button, input[type="submit"], .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
     cursor: pointer;
-    position: relative;
-    overflow: hidden;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    font-size: 1em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+button[type="submit"], .btn-primary {
+    background-color: var(--color-main-accent);
+    color: var(--color-white);
+}
+
+button[type="submit"]:hover, .btn-primary:hover {
+    background-color: var(--color-dark-accent);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
 
-.active-project-card::before {
+/* Botones específicos de Project Details */
+.project-actions-top a, .project-actions-top button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+.project-actions-top .edit-btn { background-color: var(--color-warning); color: var(--color-darkest); }
+.project-actions-top .edit-btn:hover { background-color: #e0a800; }
+.project-actions-top .delete-btn { background-color: var(--color-danger); color: var(--color-white); }
+.project-actions-top .delete-btn:hover { background-color: #c82333; }
+.project-actions-top .delete-form { display: inline-block; }
+
+.task-actions a, .task-actions button, .subtask-actions a, .subtask-actions button {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    border: none;
+}
+
+.task-actions .details-btn { background-color: var(--color-main-accent); color: var(--color-white); }
+.task-actions .details-btn:hover { background-color: var(--color-dark-accent); }
+.task-actions .edit-btn, .subtask-actions .edit-btn { background-color: var(--color-warning); color: var(--color-darkest); }
+.task-actions .edit-btn:hover, .subtask-actions .edit-btn:hover { background-color: #e0a800; }
+.task-actions .delete-btn, .subtask-actions .delete-btn { background-color: var(--color-danger); color: var(--color-white); }
+.task-actions .delete-btn:hover, .subtask-actions .delete-btn:hover { background-color: #c82333; }
+.task-actions .subtask-create-btn { background-color: var(--color-dark-accent); color: var(--color-white); }
+.task-actions .subtask-create-btn:hover { background-color: var(--color-darkest); }
+
+/* ==============================================
+   LAYOUT DE IMÁGENES (para avatares de perfil)
+   ============================================== */
+.imagenes-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.imagenes-container label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin: 0; /* Anula margen de label general */
+}
+
+.imagenes-container img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    transition: border var(--transition-fast);
+}
+
+.imagenes-container input[type="radio"]:checked + img {
+    border-color: var(--color-main-accent);
+    box-shadow: 0 0 0 3px rgba(var(--color-main-accent), 0.3);
+}
+
+/* Ocultar radio button original */
+.imagenes-container input[type="radio"] {
+    display: none;
+}
+
+/* ==============================================
+   NAVBAR (BOOTSTRAP OVERRIDES)
+   ============================================== */
+.navbar {
+    background-color: var(--color-darkest) !important;
+    border-bottom: 1px solid var(--color-dark-accent);
+    box-shadow: var(--shadow-md);
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: var(--color-text-light) !important;
+    font-weight: 500;
+}
+
+.navbar-brand:hover, .navbar-nav .nav-link:hover {
+    color: var(--color-main-accent) !important;
+}
+
+.navbar-toggler {
+    border-color: rgba(var(--color-text-light), 0.1) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.navbar-text {
+    color: var(--color-text-light) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--color-danger) !important;
+}
+
+.btn-outline-light {
+    color: var(--color-text-light) !important;
+    border-color: var(--color-text-light) !important;
+    transition: all var(--transition-fast);
+}
+
+.btn-outline-light:hover {
+    background-color: var(--color-main-accent) !important;
+    color: var(--color-white) !important;
+    border-color: var(--color-main-accent) !important;
+}
+
+/* ==============================================
+   FOOTER (BOOTSTRAP OVERRIDES)
+   ============================================== */
+footer {
+    background-color: var(--color-darkest) !important;
+    color: var(--color-text-light) !important;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid var(--color-dark-accent);
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
+
+/* ==============================================
+   PROYECTOS (PROJECTS.EJS)
+   ============================================== */
+p.create-link {
+    text-align: center;
+    margin-bottom: 25px;
+}
+p.create-link a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-success); /* Verde para crear, usando variable */
+    color: var(--color-white);
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color var(--transition-normal);
+}
+p.create-link a:hover {
+    background-color: darken(var(--color-success), 10%); 
+    background-color: #218838; /* Ajuste manual para el hover */
+}
+
+.project-list { 
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.project-item { 
+    border: 1px solid var(--color-gray-light); 
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: var(--color-white); 
+    box-shadow: var(--shadow-sm);
+    line-height: 1.6;
+    color: var(--color-darkest); 
+}
+.project-item strong {
+    font-size: 1.2em;
+    color: var(--color-dark-accent); 
+}
+
+.project-actions {
+    margin-top: 15px;
+    border-top: 1px solid var(--color-gray-light); 
+    padding-top: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+.project-actions a, .project-actions button { 
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    cursor: pointer;
+    border: 1px solid transparent; /* Borde por defecto para consistencia */
+}
+.project-actions .details-btn { /* Para el enlace "Ver Detalles" */
+    background-color: var(--color-main-accent);
+    color: var(--color-white);
+    border-color: var(--color-main-accent);
+}
+.project-actions .details-btn:hover {
+    background-color: var(--color-dark-accent);
+    border-color: var(--color-dark-accent);
+}
+.project-actions .edit-btn {
+    background-color: var(--color-warning); /* Amarillo para editar */
+    color: var(--color-darkest);
+    border-color: var(--color-warning);
+}
+.project-actions .edit-btn:hover {
+    background-color: #e0a800; /* Ajuste manual para el hover */
+    border-color: #e0a800;
+}
+.project-actions .delete-form {
+    display: inline-block;
+    margin: 0;
+}
+.project-actions .delete-btn {
+    background-color: var(--color-danger); /* Rojo para eliminar */
+    color: var(--color-white);
+    border: none; /* No necesita borde ya que el color de fondo lo define */
+}
+.project-actions .delete-btn:hover {
+    background-color: #c82333; /* Ajuste manual para el hover */
+}
+
+p.no-projects {
+    text-align: center;
+    font-style: italic;
+    color: var(--color-gray-dark); /* Color gris oscuro */
+    margin-top: 30px;
+}
+
+/* ==============================================
+   PROJECTS-DETAILS.EJS ESPECÍFICOS
+   ============================================== */
+.info-section {
+    background-color: rgba(var(--color-main-accent), 0.1);
+    border-left: 5px solid var(--color-main-accent);
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    color: var(--color-darkest);
+}
+
+.info-section strong {
+    color: var(--color-dark-accent);
+}
+
+.member-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.member-list li {
+    background-color: var(--color-background-light);
+    border: 1px solid #e0e0e0;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 5px;
+    color: var(--color-darkest);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Tarea y Subtarea Formularios */
+.task-form-section, .subtask-form-section {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-dark-accent);
+    padding: 25px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+.task-form-section h3, .subtask-form-section h3 {
+    color: var(--color-main-accent);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Listas de Tareas */
+.task-list {
+    margin-top: 20px;
+}
+
+.task-item {
+    border: 1px solid var(--color-dark-accent);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-md);
+    color: var(--color-darkest);
+    position: relative; /* Para la barra lateral de estado */
+    overflow: hidden;
+}
+
+.task-item::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
-    width: 5px;
+    width: 5px; /* Ancho de la barra de estado */
     height: 100%;
-    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-    transition: var(--transition-fast);
+    background-color: lightgray; /* Color por defecto, se sobrescribirá */
 }
 
-.active-project-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--color-primary);
+/* Colores de barra lateral de tarea según estado */
+.task-item.Pendiente::before { background-color: var(--color-info); }
+.task-item.EnProceso::before { background-color: var(--color-warning); }
+.task-item.Completada::before { background-color: var(--color-success); }
+.task-item.Bloqueada::before { background-color: var(--color-danger); }
+
+
+.task-item h4 {
+    margin-top: 0;
+    color: var(--color-dark-accent);
+    font-size: 1.15em;
+    margin-bottom: 10px;
+}
+.task-item p {
+    margin: 5px 0;
+    font-size: 0.95em;
 }
 
-.active-project-card:hover::before {
-    width: 8px;
-}
-
-/* ===== CONTENIDO DE TARJETAS ACTIVAS ===== */
-.project-header {
+.task-actions {
+    margin-top: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.project-name {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--color-darker);
-    margin: 0;
-    text-decoration: none;
-}
-
-.project-name:hover {
-    color: var(--color-primary);
-    text-decoration: none;
-}
-
-.project-dates {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.date-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0.5rem;
-    background: var(--color-light);
-    border-radius: 6px;
-    min-width: 100px;
-}
-
-.date-label {
-    font-size: 0.7rem;
-    color: var(--color-muted);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.date-value {
-    font-size: 0.9rem;
-    color: var(--color-darker);
-    font-weight: 600;
-    margin-top: 0.2rem;
-}
-
-/* ===== USUARIOS EN PROYECTO ===== */
-.project-users {
-    margin-bottom: 1rem;
-}
-
-.users-label {
-    font-size: 0.8rem;
-    color: var(--color-muted);
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.users-list {
-    display: flex;
-    gap: 0.5rem;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
-.user-avatar {
-    position: relative;
-    cursor: pointer;
+/* Subtareas */
+.subtask-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
 }
 
-.user-image {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: 2px solid var(--color-primary);
-    transition: var(--transition-fast);
-    object-fit: cover;
+.subtask-item {
+    background-color: var(--color-background-light);
+    border: 1px dashed #e0e0e0;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.9em;
+    color: var(--color-darkest);
 }
 
-.user-image:hover {
-    transform: scale(1.1);
-    border-color: var(--color-accent);
+.subtask-item strong {
+    color: var(--color-dark-accent);
 }
 
-/* ===== DESCRIPCIÓN DEL PROYECTO (TOOLTIP) ===== */
-.project-description-tooltip {
-    max-width: 300px;
+.subtask-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
 }
 
-/* ===== ESTADOS DE CARGA ===== */
-.loading-spinner {
-    color: var(--color-primary);
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    color: var(--color-main-accent);
+    font-weight: bold;
+    text-decoration: none;
+}
+.back-link:hover {
+    text-decoration: underline;
 }
 
-.spinner-border {
-    width: 2rem;
-    height: 2rem;
+/* Formulario de Subtarea Dinámico */
+[id^="subtaskForm-"] {
+    display: none; /* Por defecto, oculto */
+    border-top: 1px dashed #ccc;
+    padding-top: 15px;
+    margin-top: 15px;
+    background-color: var(--color-background-light);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
 }
 
-/* ===== MENSAJES VACÍOS ===== */
-.no-projects-message {
-    background: var(--color-white);
-    border: 2px dashed var(--color-border);
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 1rem 0;
-}
-
-.no-projects-message i {
-    color: var(--color-muted);
-}
-
-/* ===== SCROLLBAR PERSONALIZADO ===== */
-.projects-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.projects-list::-webkit-scrollbar-track {
-    background: var(--color-light);
-    border-radius: 3px;
-}
-
-.projects-list::-webkit-scrollbar-thumb {
-    background: var(--color-accent);
-    border-radius: 3px;
-}
-
-.projects-list::-webkit-scrollbar-thumb:hover {
-    background: var(--color-primary);
-}
-
-/* ===== TOAST NOTIFICATIONS ===== */
-.toast {
-    background: var(--color-white);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-lg);
-}
-
-.toast-header {
-    background: var(--color-light);
-    border-bottom: 1px solid var(--color-border);
-}
-
-/* ===== RESPONSIVE UTILITIES ===== */
-@media (max-width: 768px) {
-    .search-container {
-        min-width: 200px;
-        margin-bottom: 0.5rem;
-    }
-    
-    .main-title {
-        font-size: 1.5rem;
-    }
-    
-    .sidebar-section {
-        padding: 1rem;
-    }
-    
-    .main-section {
-        padding: 1rem;
-    }
-}
-
-/* ===== ANIMACIONES ===== */
+/* ==============================================
+   ANIMACIONES Y EFECTOS
+   ============================================== */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .fade-in {
     animation: fadeIn 0.5s ease-out;
 }
 
-/* ===== EFECTOS DE HOVER MEJORADOS ===== */
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-.btn:active {
-    transform: translateY(0);
-}
-
-/* ===== DESTACADO DE BÚSQUEDA ===== */
-.search-highlight {
-    background-color: rgba(224, 116, 65, 0.3);
-    font-weight: bold;
-    padding: 0.1rem 0.2rem;
-    border-radius: 3px;
-}
-
-/* ===== ESTADOS DE CONEXIÓN ===== */
-.connection-status {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    z-index: 1050;
-    transition: var(--transition-normal);
-}
-
-.connection-status.connected {
-    background: var(--color-success);
-    color: var(--color-white);
-}
-
-.connection-status.disconnected {
-    background: var(--color-danger);
-    color: var(--color-white);
-}
-
-.connection-status.connecting {
-    background: var(--color-warning);
-    color: var(--color-darkest);
-}
-
-/* Área del botón */
+/* Para el botón de Login en Login.ejs */
 .btn-container {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  margin-top: 20px;
+    position: relative;
+    width: 100%;
+    height: 50px; /* Suficiente espacio para el movimiento */
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Centrar el botón inicialmente */
+    align-items: center;
 }
 
 #login-btn {
-  position: absolute;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+    position: absolute; /* Permite el movimiento */
+    padding: 12px 25px;
+    width: 150px; /* Ancho fijo para consistencia */
+    background-color: var(--color-main-accent);
+    color: var(--color-white);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-/* Posiciones para que se mueva bien */
-.shift-left   { transform: translateX(-100px); }
-.shift-right  { transform: translateX(280px); }
-.shift-top    { transform: translateY(-40px); }
-.shift-bottom { transform: translateY(75px); }
+#login-btn:hover {
+    background-color: var(--color-dark-accent);
+}
 
-/* Otros enlaces */
+/* Clases para el movimiento del botón (asumiendo JS las añade) */
+.shift-left { transform: translateX(-100px); }
+.shift-right { transform: translateX(100px); } /* Ajustado para un diseño más limpio */
+.shift-top { transform: translateY(-40px); }
+.shift-bottom { transform: translateY(40px); }
+
+/* Otros enlaces en Login/Recuperación/Reset */
 .links {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+.links a {
+    color: var(--color-dark-accent);
+    font-weight: 500;
+}
+.links a:hover {
+    color: var(--color-main-accent);
+}
+
+/* Estilos para el texto pequeño de la contraseña */
+.card small {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    color: #888;
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN
+   ============================================== */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    .card {
+        padding: 20px;
+        margin: 30px auto;
+    }
+
+    .navbar-brand {
+        font-size: 1.25rem !important;
+    }
+
+    .project-actions-top {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .task-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .imagenes-container img {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 5px auto;
+        padding: 10px;
+    }
+
+    .card {
+        margin: 20px auto;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    h3 {
+        font-size: 1.2em;
+    }
+
+    button, input[type="submit"], .btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
 }
